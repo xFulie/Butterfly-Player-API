@@ -1,5 +1,0 @@
-RewriteEngine On
-Options -Indexes
-
-RewriteRule ^([A-Za-z]+)@([A-Za-z0-9._-]+)$ packages_update.php?package=$1&get_file=$2 [L]
-RewriteRule ^beta-([A-Za-z]+)@([A-Za-z0-9._-]+)$ packages_update.php?package=$1&get_file=$2 [L]
