@@ -1,0 +1,402 @@
+@media (max-width: 900px) {
+	.butterfly-player-api .player-button a {
+	  padding: 8px 12px;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile svg {
+		fill: #fff;
+		color: #fff;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile {
+		background-color: rgba(0, 0, 0, 0.4);
+
+		z-index: 1;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		color: #fff;
+
+		transform: scale(1.0);
+
+		transition: .2s;
+	}
+
+	.butterfly-player-api.video-playing .butterfly-player-controleurs-mobile {
+		transform: scale(1.1);
+		opacity: 0.0;
+
+		transition: .2s;
+	}
+
+	.butterfly-player-api.video-playing.video-is-pause .butterfly-player-controleurs-mobile,
+	.butterfly-player-api.video-playing.settings .butterfly-player-controleurs-mobile,
+	.butterfly-player-api.video-playing.mouse-in-player .butterfly-player-controleurs-mobile {
+		transform: scale(1.0);
+		opacity: 1.0;
+
+		transition: .2s;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .top,
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom {
+		position: absolute;
+		left: 0;
+		right: 0;
+
+		padding: 12px;
+
+		display: flex;
+		align-items: center;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom {
+		bottom: 0;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom button {
+		background-color: transparent;
+		border: none;
+
+		cursor: pointer;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom button svg {
+		width: 28px;
+		height: 28px;
+
+		display: block;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom ul {
+		display: flex;
+		align-items: center;
+
+		list-style: none;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom ul li { margin-left: 16px; }
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom ul li:nth-child(1) { margin-left: 0px; }
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom .left,
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom .center {
+		margin-right: 12px;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom .right .info-video span {
+		display: none;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom .right .info-video span:nth-child(1) {
+		display: block;
+	}
+
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .bottom .center {
+		width: 100%;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .contenaire-center {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		width: 100%;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .contenaire-center ul {
+		list-style: none;
+
+		display: flex;
+		align-items: center;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .contenaire-center ul li { margin-left: 24px; }
+	.butterfly-player-api .butterfly-player-controleurs-mobile .contenaire-center ul li:nth-child(1) { margin-left: 0px; }
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .contenaire-center button {
+		background-color: rgba(40, 40, 40, 0.5);
+		border: none;
+
+		cursor: pointer;
+
+		border-radius: 50%;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		width: 54px;
+		height: 54px;
+	}
+
+	.butterfly-player-api .butterfly-player-controleurs-mobile .contenaire-center button svg {
+		display: block;
+
+		width: 32px;
+		height: 32px;
+	}
+
+	.butterfly-player-api .progress-bar-contenaire-relative .progress-bar {
+		display: block;
+		position: relative;
+
+		background-color: rgba(220, 220, 220, 0.3);
+
+		overflow: hidden;
+
+		height: 8px;
+		border-radius: 8px;
+
+		cursor: pointer;
+	}
+
+
+	.butterfly-player-api .option-player-video {
+		z-index: 9;
+		position: absolute;
+		bottom: 80px;
+		right: -280px;
+
+		width: 250px;
+		max-height: 380px;
+
+		background-color: rgba(0, 0, 0, 0.9);
+		color: #fff;
+
+		border-radius: 6px;
+
+		overflow: hidden;
+
+		text-align: left;
+		transition: .2s;
+	}
+	.butterfly-player-api .option-player-video-translate {
+		display: grid;
+		grid-template-columns: repeat(2, 250px);
+
+		transition: .2s;
+	}
+
+	.butterfly-player-api .option-player-video-content {
+		width: 100%;
+		max-height: 280px;
+
+		overflow: auto;
+	}
+
+	.butterfly-player-api .option-player-video-content.right .setting-info {
+		display: none;
+	}
+
+	.butterfly-player-api.settings .option-player-video {
+		right: 24px;
+		transition: .2s;
+	}
+
+	.butterfly-player-api .option-player-video .option-button {
+		width: 250px;
+		border-top: solid 1px rgba(100, 100, 100, 1.0);
+	}
+
+	.butterfly-player-api .option-player-video .option-button:nth-child(1) { border-top: none; }
+
+	.butterfly-player-api .option-player-video .option-player-video-content span.current {
+		padding: 12px 16px;
+		font-weight: 700;
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		cursor: pointer;
+	}
+
+	.butterfly-player-api .option-player-video .option-player-video-content span.current:hover {
+		background-color:  var(--color-primary-player-butterfly);
+		color: var(--color-text-player-butterfly);
+	}
+
+	.butterfly-player-api .option-player-video .option-button ul {
+		display: none;
+	}
+
+	.butterfly-player-api .option-player-video .option-player-video-content ul li { height: auto; display: block; margin-left: 0; }
+
+	.butterfly-player-api .option-player-video .option-player-video-content ul li span {
+		padding: 12px 16px;
+
+		display: block;
+
+		width: 100%;
+
+		cursor: pointer;
+		font-weight: 700;
+	}
+
+	.butterfly-player-api .option-player-video .option-player-video-content ul li span.button-hover:hover,
+	.butterfly-player-api .option-player-video .option-player-video-content ul li.button-hover span:hover {
+		background-color: var(--color-primary-player-butterfly);
+		color: #000;
+	}
+
+	.butterfly-player-api .option-player-video .setting-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		padding: 8px 16px;
+
+		font-weight: 600;
+
+		border-bottom: solid 1px rgba(100, 100, 100, 1.0);
+	}
+
+	.butterfly-player-api .option-player-video .setting-head div.button-icon {
+		cursor: pointer;
+	}
+
+	.butterfly-player-api .option-player-video .setting-head svg {
+		width: 20px;
+		height: 20px;
+
+		pointer-events: none;
+	}
+
+	.butterfly-player-api .option-player-video .option-player-video-content ul li.button-change-font {
+		display: flex;
+	}
+
+	.butterfly-player-api .option-player-video-content li.button-change-font span:nth-child(2) {
+		width: calc( 100% - 80px );
+
+		text-align: center;
+	}
+
+	.butterfly-player-api .option-player-video-content li.button-change-font span.icon-button {
+		display: inline-block;
+
+		height: 41px;
+
+		padding: 0;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+
+	.butterfly-player-api .option-player-video-content li.button-change-font span.icon-button svg {
+		width: 20px;
+		height: 20px;
+	}
+
+
+
+	.butterfly-player-api.video-is-error .video-controler-for-error {
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		color: rgba(180, 180, 180, 1.0);
+
+		pointer-events: none;
+
+		display: flex;
+		align-items: center;
+
+		padding: 64px;
+	}
+
+	.butterfly-player-api.video-is-error .video-controler-for-error::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		background-image: url(https://i.makeagif.com/media/5-29-2016/LOYE32.gif);
+		opacity: .1;
+
+		filter: grayscale(100%);
+	}
+
+	.butterfly-player-api.video-is-error .video-controler-for-error h2 {
+		position: relative;
+		font-size: 32px;
+		line-height: 38px;
+
+		margin-bottom: 12px;
+	}
+
+	.butterfly-player-api.video-is-error .video-controler-for-error p.error-message {
+		font-size: 18px;
+		line-height: 22px;
+		font-weight: 400;
+	}
+	.butterfly-player-api.video-is-error .video-controler-for-error p.error-code {
+		font-size: 22px;
+		line-height: 28px;
+		font-weight: 400;
+
+		margin-bottom: 12px;
+	}
+
+	.butterfly-player-api.video-is-error .video-controler-for-error svg {
+		position: relative;
+		width: 20%;
+
+		color: #ccc;
+		fill: #ccc;
+
+		margin-right: 32px;
+	}
+
+	.butterfly-player-api.video-is-error img#video-thumbnail,
+	.butterfly-player-api.video-is-error .butterfly-player-controleurs-mobile {
+		display: none;
+	}
+
+
+	.butterfly-player-api.video-is-error video#video-player {
+		min-height: 480px;
+	}
+
+
+	.butterfly-player-api .player-button {
+		z-index: 99;
+		position: absolute;
+		top: 12px;
+		right: 12px;
+		display: inline-block;
+		transition: .2s;
+	}
+
+	.butterfly-player-api.settings .player-button,
+	.butterfly-player-api.mouse-in-player .player-button,
+	.butterfly-player-api.video-is-pause .player-button {
+		top: 24px;
+	}
+
+	.butterfly-player-api.settings .player-button {
+		top: 24px;
+	}
+
+	.butterfly-player-api.player-button-is-skipped .player-button {
+		top: 24px;
+	}
+}

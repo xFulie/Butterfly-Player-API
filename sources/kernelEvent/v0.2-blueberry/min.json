@@ -1,0 +1,13 @@
+{
+	"config": {
+		"var_type": "kernel",
+		"environement": "dev - not hotlink",
+		"name": "Blueberry",
+		"version": "0.2.3"
+	},
+	"script": [
+		"kernel.melon.variable",
+		"kernel.melon.function",
+		"kernel.melon.min"
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"config": {
+		"var_type": "kernel",
+		"environement": "developpement",
+		"name": "Blueberry",
+		"version": "0.3"
+	},
+	"script": [
+		"blueberry.variable",
+		"blueberry.setter-function",
+		"blueberry.getter-function",
+		"blueberry.function",
+		"blueberry.public-function",
+		"blueberry.min"
+	]
+}

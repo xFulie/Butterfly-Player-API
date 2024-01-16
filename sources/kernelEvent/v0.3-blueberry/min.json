@@ -1,0 +1,15 @@
+{
+	"config": {
+		"var_type": "kernel",
+		"environement": "developpement",
+		"name": "Blueberry",
+		"version": "0.3"
+	},
+	"script": [
+		"blueberry.var-icon",
+		"blueberry.min",
+		"blueberry.function",
+		"blueberry.evenement",
+		"blueberry.manager"
+	]
+}

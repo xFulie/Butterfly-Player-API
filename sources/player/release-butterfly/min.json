@@ -1,0 +1,14 @@
+{
+	"config": {
+		"var_type": "systeme",
+		"environement": "dev - not hotlink",
+		"name": "Fluttershy",
+		"version": "0.6.2"
+	},
+	"package@script": [
+		"kernelEvent@v0.2-blueberry"
+	],
+	"script": [
+		"fluttershy.min"
+	]
+}

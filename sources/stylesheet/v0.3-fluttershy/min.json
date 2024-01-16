@@ -1,0 +1,7 @@
+{
+	"stylesheet": [
+		"fluttershy.min",
+		"blueberry.min",
+		"fluttershy.mobile-controlers"
+	]
+}
