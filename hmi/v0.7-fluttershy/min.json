@@ -9,6 +9,7 @@
 		"kernelEvent@v0.3-blueberry"
 	],
 	"script": [
+		"fluttershy.render",
 		"fluttershy.min",
 		"fluttershy.hmi"
 	]

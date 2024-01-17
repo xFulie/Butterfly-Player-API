@@ -39,6 +39,14 @@ class blueberryEvenement extends blueberryFunction {
 				if(taskStoped == true)
 					return;
 			}
+
+			this.ConstructorElement.classList.add('video-is-play')
+			this.ConstructorElement.classList.remove('video-is-pause')
+			this.ConstructorElement.classList.remove('video-ended')
+			this.ConstructorElement.classList.remove('video-is-error')
+
+			if(!this.ConstructorElement.classList.contains('video-playing'))
+				this.ConstructorElement.classList.add('video-playing')
 		})
 		this.addEvent(this.videoNode, 'pause', () => {
 			if(this.onPause) {
@@ -46,6 +54,9 @@ class blueberryEvenement extends blueberryFunction {
 				if(taskStoped == true)
 					return;
 			}
+
+			this.ConstructorElement.classList.remove('video-is-play')
+			this.ConstructorElement.classList.add('video-is-pause')
 		})
 		this.addEvent(this.videoNode, 'error', () => {
 			if(this.onError) {
@@ -67,6 +78,8 @@ class blueberryEvenement extends blueberryFunction {
 				if(taskStoped == true)
 					return;
 			}
+
+			this.currentTime = this.videoNode.currentTime
 		})
 	}
 	/*

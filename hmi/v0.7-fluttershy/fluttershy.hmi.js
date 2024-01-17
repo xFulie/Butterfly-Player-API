@@ -3,303 +3,161 @@ class FluttershyHMI extends FluttershyMain {
 	set(CssSelectorElement, SettingsObject) { this.init(CssSelectorElement, SettingsObject); }
 
 	global_controls() {
+		this.kernel.ConstructorElement.classList.add('butterfly-player-api', 'blueberry-player-kernel')
+
 		document.querySelector('head').insertAdjacentHTML(
 			'beforeend',
-			`<link rel="stylesheet" type="text/css" href="${this.link_css_player}">`
-		)
-		document.querySelector('head').insertAdjacentHTML(
-			'beforeend',
-			`<style type="text/css">:root { --color-primary-player-butterfly: ${this.colorPlayer}; --color-text-player-butterfly: ${this.colorPlayerText}; }</style>`
+			`<link rel="stylesheet" type="text/css" href="${this.link_css_player}">
+			<style type="text/css">:root { --color-primary-player-butterfly: ${this.colorPlayer}; --color-text-player-butterfly: ${this.colorPlayerText}; }</style>`
 		)
 
-		this.Kernel.ConstructorElement.classList.add('butterfly-player-api', 'blueberry-player-kernel')
+		const myHtml = html("div", {class: "butterfly-player-controleurs"},
+			html("div", {class: "top"}),
+			html("div", {class: "bottom"},
+				html("div", {class: "left"}, 
+					html("ul", {},
+						html("li", {},
+							html("button", {id: "player_button_pause"}, iconPlay)
+						),
+						html("li", {},
+							html("button", {id: "player_button_muted"}, iconMute),
+							html("span", {class: "volumechange-bar"},
+								html("span", {class: "volumechange-bar-content"})
+							)
+						)
+					)
+				),
+				html("div", {class: "center"},
+					html("div", {class: "progress-bar-contenaire-relative"},
+						html("span", {class: "infobull-progressbar"},
+							html("span", {class: "timecode"})
+						),
+						html("span", {class: "wf-display progress-bar"},
+							html("span", {class: "buffered"}),
+							html("span", {class: "readed"})
+						)
+					)
+				),
+				html("div", {class: "right"},
+					html("ul", {class: "center"},
+						html("li", {},
+							html("div", {class: "info-video"},
+								html("span", {id: "videoCurrentTime"}, "00:00"),
+								html("span", {}, "/"),
+								html("span", {id: "videoDuration"}, "00:00")
+							)
+						),
+						html("li", {},
+							html("button", {class: "icon setting-video-icon", id: "setting-video-icon"}, iconSetting)
+						),
+						html("li", {},
+							html("button", {class: "icon", id: "player_button_fullscreen"}, iconFullscreen)
+						)
+					)
+				)
+			),
+			html("div", {class: "trackText", style: `font-size: ${this.fontSizeSubtitle}px; line-height: ${this.fontSizeSubtitle+5}px;`}),
+			html("div", {class: "option-video"},
+				html("section", {class: "option-player-video"},
+					html("section", {class: "option-player-video-translate"},
+						html("section", {class: "option-player-video-content left"},
+							this.htmlQuality,
+							this.htmlAudio,
+							this.htmlSubtitle,
+							this.htmlPlaybackRate,
+							html("div", {class: "button-get-settings option-button", 'data-get': "legal-notice", 'data-name': `V${systeme_version} ${systeme_name} ${systeme_environement}`},
+								html("span", {class: "current qulity-current"},
+									html("span", {class: "title"}, "Information sur le player"),
+									html("span", {class: "generate-change"})
+								)
+							),
+						),
+						html("section", {class: "option-player-video-content right"},
+							html("section", {class: "setting-head"},
+								html("div", {class: "button-icon"}, iconLess),
+								html("div", {id: "menu-title"}, "Menu")
+							),
+							this.htmlQualityButtons,
+							this.htmlAudioButtons,
+							this.htmlSubtitleButtons,
+							this.htmlPlaybackRateButtons,
+							html("section", {class: "setting-info", id: "legal-notice"},
+								html("p", {}, "Butterfly Player API"),
+								html("p", {}, `Kernel V${kernel_version} ${kernel_name} ${kernel_environement}`),
+								html("p", {}, `Player V${systeme_version} ${systeme_name} ${systeme_environement}`),
+								html("p", {}, `By 'heart_butterfly' - Floagg Entreprise EI`)
+							)
+						)
+					)
+				)
+			) 
+		)
 
-		this.playerHTML = `<div class="butterfly-player-controleurs">`
+		if(this.playerSubTitle || this.playerTitle) {
+			myHtml.querySelector('.top').appendChild(html("div", {class: "info_file"},
+				html("h2", {}, this.playerSubTitle),
+				html("h1", {id: "filename"}, this.playerTitle)
+			))
+		}
 
-			this.playerHTML += `<div class="top">`
-			if(this.playerSubTitle || this.playerTitle) {
-				this.playerHTML += `<div class="info_file">`
-					this.playerHTML += `<h2>${this.playerSubTitle}</h2>`
-					this.playerHTML += `<h1 id="filename">${this.playerTitle}</h1>`
-				this.playerHTML += `</div>`
-			}
-			this.playerHTML += `</div>`
-			this.bar_controls()
-
-		this.playerHTML += `</div>`
-		this.playerHTML += `<div class="trackText" style="font-size: ${this.fontSizeSubtitle}px; line-height: ${this.fontSizeSubtitle+5}px;"></div>`
-
-		this.option_video_content()
-
-
-		this.Kernel.ConstructorElement.insertAdjacentHTML('afterbegin', this.playerHTML)
-	}
-
-	bar_controls() {
-		this.playerHTML += `<div class="bottom">`
-			this.playerHTML += `<div class="left">`
-				this.playerHTML += `<ul>`
-					this.playerHTML += `<li><button class="icon" id="player_button_pause">${iconPlay}</button></li>`
-					this.playerHTML += `<li>`
-						this.playerHTML += `<button class="icon" id="player_button_muted">${iconMute}</button>`
-						this.playerHTML += `<span class="volumechange-bar"><span class="volumechange-bar-content"></span></span>`
-					this.playerHTML += `</li>`
-				this.playerHTML += `</ul>`
-			this.playerHTML += `</div>`
-
-			this.playerHTML += `<div class="center">`
-				this.playerHTML += `<div class="progress-bar-contenaire-relative">`
-					this.playerHTML += `<span class="infobull-progressbar">`
-						if(this.seek_file) {
-							this.playerHTML += `<video src="${this.seek_file}" muted width="200px"></video>`
-						}
-						this.playerHTML += `<span class="timecode">00:00</span>`
-					this.playerHTML += `</span>`
-
-					this.playerHTML += `<span class="wf-display progress-bar">`
-						this.playerHTML += `<span class="buffered"></span>`
-						this.playerHTML += `<span class="readed"></span>`
-					this.playerHTML += `</span>`
-				this.playerHTML += `</div>`
-			this.playerHTML += `</div>`
-
-			this.playerHTML += `<div class="right">`
-				this.playerHTML += `<ul>`
-					this.playerHTML += `<li>`
-						this.playerHTML += `<div class="info-video">`
-							this.playerHTML += `<span id="videoCurrentTime">00:00</span>`
-							this.playerHTML += `<span>/</span>`
-							this.playerHTML += `<span id="videoDuration">00:00</span>`
-						this.playerHTML += `</div>`
-					this.playerHTML += `</li>`
-					this.playerHTML += `<li><button class="icon setting-button-icon" id="setting-video-icon">${iconSetting}</button></li>`
-					this.playerHTML += `<li><button class="icon" id="player_button_fullscreen">${iconFullscreen}</button></li>`
-				this.playerHTML += `</ul>`
-			this.playerHTML += `</div>`
-		
-		this.playerHTML += `</div>`
+		this.kernel.ConstructorElement.appendChild(myHtml)
 	}
 
 	option_video_content() {
-		this.playerHTML += `<div class="option-video">`
-			this.playerHTML += `<section class="option-player-video">`
-				
-				this.playerHTML += `<section class="option-player-video-translate">`
-
-				this.playerHTML += `<section class="option-player-video-content left">`
-					this.playerHTML += this.htmlQuality
-					this.playerHTML += this.htmlAudio
-					this.playerHTML += this.htmlSubtitle
-					this.playerHTML += this.htmlPlaybackRate
-					this.playerHTML += `<div class="button-get-settings option-button quality-changer" data-get="legal-notice" data-name="V${systeme_version} ${systeme_name} ${systeme_environement}">`
+					this.playerHTML += `< class="" data-get="legal-notice" data-name="">`
 									+`<span class="current qulity-current">`
-										+`<span class="title">Information sur le player</span>`
+										+`<span class="title"></span>`
 									+`</span>`
-							+`</div>`
-				this.playerHTML += `</section>`
-				this.playerHTML += `<section class="option-player-video-content right">`
-					this.playerHTML += `<section class="setting-head">`
-						this.playerHTML += `<div class="button-icon">${iconLess}</div>`
-						this.playerHTML += `<div id="menu-title">Menu</div>`
-					this.playerHTML += `</section>`
-					this.playerHTML += this.htmlQualityButtons
-					this.playerHTML += this.htmlAudioButtons
-					this.playerHTML += this.htmlSubtitleButtons
-					this.playerHTML += this.htmlPlaybackRateButtons
-					this.playerHTML += `<div class="setting-info" id="legal-notice">`
-						this.playerHTML += `<p>Butterfly Player API</p>`
-						this.playerHTML += `<p>Kernel V${kernel_version} ${kernel_name} ${kernel_environement}</p>`
-						this.playerHTML += `<p>Player V${systeme_version} ${systeme_name} ${systeme_environement}</p>`
-						this.playerHTML += `<p>By 'heart_butterfly' - Floagg Entreprise EI</p>`
-					this.playerHTML += `</div>`
-				this.playerHTML += `</section>`
-
-				this.playerHTML += `</section>`
-
-			this.playerHTML += `</section>`
-		this.playerHTML += `</div>`
 	}
 
 	evement_controls() {
-		let infoBull = this.Kernel.ConstructorElement.querySelector('.infobull-progressbar')
-		let progressBarContenaire = this.Kernel.ConstructorElement.querySelector('.progress-bar')
+		let infoBull = this.kernel.getElement('.infobull-progressbar')
+		let progressBarContenaire = this.kernel.getElement('.progress-bar')
 		let progressBarReaded = progressBarContenaire.querySelector('.readed')
 
-
-		this.Kernel.addEvent(window, 'keydown', (e) => {
-			switch(e.key) {
-				case 'z':
-				case 'ArrowRight':
-					e.preventDefault()
-					this.Kernel.currentTime = this.Kernel.currentTime + 5
-					break;
-				case 'a':
-				case 'ArrowLeft':
-					e.preventDefault()
-					this.Kernel.currentTime = this.Kernel.currentTime + 5
-					break;
-
-				case 'k':
-				case ' ':
-					e.preventDefault()
-					this.Kernel.togglePlay()
-					break;
-
-				case 'f':
-					e.preventDefault()
-					this.Kernel.toggleFullScreen()
-					break;
-
-				case 'm':
-					e.preventDefault()
-					this.Kernel.toggleMute()
-					break;
-			}
-		})
-
-		this.Kernel.onLoad = () => {
-			if(this.userSet.volume !== undefined) {
-				//this.Kernel.volume = this.userSet.volume;
-				this.updateBar(null, this.userSet.volume)
-			}
-			this.updateBar(null, this.Kernel.volume, false)
-
-			if(this.Kernel.volume > 0.0) {
-				this.Kernel.ConstructorElement.querySelector('#player_button_muted').innerHTML = iconUnMute
+		function verify_volume(kernel) {
+			if(kernel.volume > 0.0) {
+				kernel.getElement('#player_button_muted').innerHTML = iconUnMute
 			} else {
-				this.Kernel.ConstructorElement.querySelector('#player_button_muted').innerHTML = iconMute
+				kernel.getElement('#player_button_muted').innerHTML = iconMute
 			}
 		}
 
-		this.Kernel.onVolumechange = () => {
-			if(this.Kernel.volume > 0.0) {
-				this.Kernel.ConstructorElement.querySelector('#player_button_muted').innerHTML = iconUnMute
-			} else {
-				this.Kernel.ConstructorElement.querySelector('#player_button_muted').innerHTML = iconMute
-			}
+
+		/*
+		 *
+		 * Appel à des evenement du Kernel
+		 *
+		 *
+		 */ 
+		
+		this.kernel.button('#player_button_pause', 'togglePlay')
+		this.kernel.button('#player_button_muted', 'toggleMute')
+		this.kernel.button('#player_button_fullscreen', 'toggleFullScreen')
+
+		this.kernel.keydown(['z', 'ArrowRight'], () => { this.kernel.upateTime = this.kernel.currentTime + 5 })
+		this.kernel.keydown(['a', 'ArrowLeft'], () => { this.kernel.upateTime = this.kernel.currentTime - 5 })
+		this.kernel.keydown(['k', ' '], () => { this.kernel.togglePlay() })
+		this.kernel.keydown('f', () => { this.kernel.toggleFullScreen() })
+		this.kernel.keydown('m', () => { this.kernel.toggleMute() })
+
+		this.kernel.onPlay = () => { this.kernel.getElement('#player_button_pause').innerHTML = iconPause }
+		this.kernel.onPause = () => { this.kernel.getElement('#player_button_pause').innerHTML = iconPlay }
+		this.kernel.onVolumechange = () => { verify_volume(this.kernel) }
+		this.kernel.onDurationchange = () => { this.kernel.updateText('#videoDuration', intToTime(this.kernel.duration)) }
+
+		this.kernel.onLoad = () => {
+			this.updateBar(null, this.kernel.volume, false)
+			verify_volume(this.kernel)
 		}
 
-		this.Kernel.onDurationchange = () => {
-			this.Kernel.ConstructorElement.querySelector('#videoDuration').textContent = intToTime(this.Kernel.duration)
+		this.kernel.onTimeupdate = () => {
+			this.kernel.updateText('#videoCurrentTime', intToTime(this.kernel.currentTime))
+			let progressSize = (this.kernel.currentTime / this.kernel.duration) * 100;
+			progressBarReaded.style.width = progressSize+"%"
 		}
 
-		this.Kernel.onTimeupdate = () => {
-			this.currentTime = this.Kernel.currentTime
-			this.Kernel.ConstructorElement.querySelector('#videoCurrentTime').textContent = intToTime(this.Kernel.currentTime)
-
-			let videoCurrentTime = (this.Kernel.currentTime / this.Kernel.duration) * 100;
-			progressBarReaded.style.width = videoCurrentTime+"%"
-		}
-
-		this.Kernel.onPlay = () => {
-			this.Kernel.ConstructorElement.classList.add('video-is-play')
-			this.Kernel.ConstructorElement.classList.remove('video-is-pause')
-			this.Kernel.ConstructorElement.classList.remove('video-ended')
-			this.Kernel.ConstructorElement.classList.remove('video-is-error')
-
-			if(!this.Kernel.ConstructorElement.classList.contains('video-playing'))
-				this.Kernel.ConstructorElement.classList.add('video-playing')
-
-			this.Kernel.ConstructorElement.querySelector('#player_button_pause').innerHTML = iconPause
-
-			//this.updateBar(null, Kernel.vVolume);
-		}
-		this.Kernel.onPause = () => {
-			this.Kernel.ConstructorElement.classList.remove('video-is-play')
-			this.Kernel.ConstructorElement.classList.add('video-is-pause')
-
-			this.Kernel.ConstructorElement.querySelector('#player_button_pause').innerHTML = iconPlay
-		}
-
-		let intervalHide = null;
-		function setIntervalMouseInPlayer(e, elem) {
-			clearInterval(intervalHide);
-			intervalHide = setInterval(() => {
-				elem.classList.remove('mouse-in-player')
-				e.visibilityControler = false
-
-				clearInterval(intervalHide);
-			}, 5000)
-		}
-
-		this.Kernel.addEvent(this.Kernel.ConstructorElement, 'mouseleave', () => {
-			if(this.Kernel.ConstructorElement.classList.contains('player-error'))
-				return;
-
-			this.Kernel.ConstructorElement.classList.remove('mouse-in-player')
-			this.Kernel.visibilityControler = false
-
-			clearInterval(intervalHide);
-		})
-		this.Kernel.addEvent(this.Kernel.ConstructorElement, 'mousemove', () => {
-			if(this.Kernel.ConstructorElement.classList.contains('error'))
-				return;
-
-			this.Kernel.ConstructorElement.classList.add('mouse-in-player')
-			this.Kernel.visibilityControler = true
-
-			setIntervalMouseInPlayer(this, this.Kernel.ConstructorElement)
-		})
-		this.Kernel.addEvent(this.Kernel.ConstructorElement.querySelector('.butterfly-player-controleurs .bottom'), 'mouseenter', () => {
-			clearInterval(intervalHide);
-		})
-		this.Kernel.addEvent(this.Kernel.ConstructorElement.querySelector('.butterfly-player-controleurs .bottom'), 'mouseleave', () => {
-			setIntervalMouseInPlayer(this, this.Kernel.ConstructorElement)
-		})
-
-
-
-		this.Kernel.addEvent(progressBarContenaire, 'mouseenter', () => {
-			progressBarContenaire.addEventListener('mousemove', (e) => {
-				let progressWidth = progressBarContenaire.offsetWidth
-
-
-				var rect = progressBarContenaire.getBoundingClientRect(); //todo: optimisation ?
-				let x = e.clientX - rect.left;
-				var time = (x/progressWidth) * this.Kernel.duration;
-
-				infoBull.querySelector('.timecode').textContent = intToTime(time)
-
-				if(this.Kernel.seek_file)
-					infoBull.querySelector('video').currentTime = time
-
-				infoBull.style.left = (x)+"px"
-				infoBull.style.display = 'block'
-			})
-		})
-
-		this.Kernel.addEvent(progressBarContenaire, 'mousedown', (e) => {
-			let progressWidth = progressBarContenaire.offsetWidth
-
-
-			var rect = progressBarContenaire.getBoundingClientRect(); //todo: optimisation ?
-			let x = e.clientX - rect.left;
-			var time = (x/progressWidth) * this.Kernel.duration;
-
-			this.Kernel.currentTime = time
-		})
-
-		this.Kernel.addEvent(progressBarContenaire, 'mouseleave', () => {
-			infoBull.style.display = 'none'
-		})
-
-
-		this.Kernel.addEvent('.volumechange-bar', 'mousedown', (ev) => {
-			this.volumeDrag = true;
-			this.updateBar(ev.clientX);
-		}, true);
-
-		this.Kernel.addEvent(document, 'mousemove', (ev) => {
-			if(this.volumeDrag){
-				this.updateBar(ev.clientX);
-			}
-		});
-		this.Kernel.addEvent(document, 'mouseup', (ev) => {
-			this.volumeDrag = false;
-		});
-
-
-		this.Kernel.addEvent(this.Kernel.ConstructorElement, 'click', (e) => {
+		this.kernel.addEvent(this.kernel.ConstructorElement, 'click', (e) => {
 			switch(e.target.nodeName) {
 				case 'h1':
 				case 'A':
@@ -308,44 +166,32 @@ class FluttershyHMI extends FluttershyMain {
 					return
 					break;
 			}
-			if(this.Kernel.ConstructorElement.classList.contains('settings')) {
+			if(this.kernel.ConstructorElement.classList.contains('settings')) {
 					
 				let r = this.kicked_settings()
 				if(r)
 					return;
 
-				this.Kernel.ConstructorElement.classList.remove('settings')
+				this.kernel.ConstructorElement.classList.remove('settings')
 			}
-			//console.log(this.Kernel.videoNode.parentNode)
-			this.Kernel.togglePlay()
+			//console.log(this.kernel.videoNode.parentNode)
+			this.kernel.togglePlay()
 		})
 
-		this.Kernel.addEvent('#player_button_pause', 'click', (e) => {
-			this.Kernel.togglePlay()
-		}, true)
-
-		this.Kernel.addEvent('#player_button_muted', 'click', (e) => {
-			this.Kernel.toggleMute()
-		}, true)
-
-		this.Kernel.addEvent('#player_button_fullscreen', 'click', (e) => {
-			this.Kernel.toggleFullScreen()
-		}, true)
-
-		let allButtonSettoing = this.Kernel.ConstructorElement.querySelectorAll('.button-get-settings')
-		this.Kernel.addEvent('#setting-video-icon', 'click', (e) => {
-			if(this.Kernel.ConstructorElement.classList.contains('settings')) {
-				this.Kernel.ConstructorElement.classList.remove('settings')
+		let allButtonSettoing = this.kernel.ConstructorElement.querySelectorAll('.button-get-settings')
+		this.kernel.addEvent('#setting-video-icon', 'click', (e) => {
+			if(this.kernel.ConstructorElement.classList.contains('settings')) {
+				this.kernel.ConstructorElement.classList.remove('settings')
 					
 				this.kicked_settings()
 				return
 			}
 			
-			this.Kernel.ConstructorElement.classList.add('settings')
+			this.kernel.ConstructorElement.classList.add('settings')
 
 			allButtonSettoing.forEach((element) => {
-				this.Kernel.addEvent(element, 'click', (e) => {
-					this.Kernel.ConstructorElement.querySelector('.option-player-video-translate').classList.add('focus')
+				this.kernel.addEvent(element, 'click', (e) => {
+					this.kernel.getElement('.option-player-video-translate').classList.add('focus')
 
 					let element_changer = element.parentNode.parentNode
 					let classUl = element.dataset.get
@@ -360,17 +206,99 @@ class FluttershyHMI extends FluttershyMain {
 			})
 		}, true)
 
+
+
+
+
+
+		let intervalHide = null;
+		function setIntervalMouseInPlayer(e, elem) {
+			clearInterval(intervalHide);
+			intervalHide = setInterval(() => {
+				elem.classList.remove('mouse-in-player')
+				e.visibilityControler = false
+
+				clearInterval(intervalHide);
+			}, 5000)
+		}
+
+		this.kernel.addEvent(this.kernel.ConstructorElement, 'mouseleave', () => {
+			if(this.kernel.ConstructorElement.classList.contains('player-error'))
+				return;
+
+			this.kernel.ConstructorElement.classList.remove('mouse-in-player')
+			this.kernel.visibilityControler = false
+
+			clearInterval(intervalHide);
+		})
+		this.kernel.addEvent(this.kernel.ConstructorElement, 'mousemove', () => {
+			if(this.kernel.ConstructorElement.classList.contains('error'))
+				return;
+
+			this.kernel.ConstructorElement.classList.add('mouse-in-player')
+			this.kernel.visibilityControler = true
+
+			setIntervalMouseInPlayer(this, this.kernel.ConstructorElement)
+		})
+		this.kernel.addEvent(this.kernel.getElement('.butterfly-player-controleurs .bottom'), 'mouseenter', () => {
+			clearInterval(intervalHide);
+		})
+		this.kernel.addEvent(this.kernel.getElement('.butterfly-player-controleurs .bottom'), 'mouseleave', () => {
+			setIntervalMouseInPlayer(this, this.kernel.ConstructorElement)
+		})
+
+
+
+		this.kernel.addEvent(progressBarContenaire, 'mouseenter', () => {
+			progressBarContenaire.addEventListener('mousemove', (e) => {
+				let progressWidth = progressBarContenaire.offsetWidth
+
+
+				var rect = progressBarContenaire.getBoundingClientRect(); //todo: optimisation ?
+				let x = e.clientX - rect.left;
+				var time = (x/progressWidth) * this.kernel.duration;
+
+				infoBull.querySelector('.timecode').textContent = intToTime(time)
+
+				if(this.kernel.seek_file)
+					infoBull.querySelector('video').currentTime = time
+
+				infoBull.style.left = (x)+"px"
+				infoBull.style.display = 'block'
+			})
+		})
+
+		this.kernel.addEvent(progressBarContenaire, 'mousedown', (e) => {
+			let progressWidth = progressBarContenaire.offsetWidth
+
+
+			var rect = progressBarContenaire.getBoundingClientRect(); //todo: optimisation ?
+			let x = e.clientX - rect.left;
+			var time = (x/progressWidth) * this.kernel.duration;
+
+			this.kernel.upateTime = time
+		})
+
+		this.kernel.addEvent(progressBarContenaire, 'mouseleave', () => {
+			infoBull.style.display = 'none'
+		})
+
+
+		this.kernel.addEvent('.volumechange-bar', 'mousedown', (ev) => { this.volumeDrag = true; this.updateBar(ev.clientX); }, true);
+		this.kernel.addEvent(document, 'mousemove', (ev) => { if(this.volumeDrag){ this.updateBar(ev.clientX); } });
+		this.kernel.addEvent(document, 'mouseup', (ev) => { this.volumeDrag = false; });
+
 		this.load_evement_settings()
 	}
 
 	kicked_settings() {
-		let allButtonSettoing = this.Kernel.ConstructorElement.querySelectorAll('.button-get-settings')
-		let allB = this.Kernel.ConstructorElement.querySelectorAll('.option-player-video-content.right .setting-info')
+		let allButtonSettoing = this.kernel.ConstructorElement.querySelectorAll('.button-get-settings')
+		let allB = this.kernel.ConstructorElement.querySelectorAll('.option-player-video-content.right .setting-info')
 
-		if(this.Kernel.ConstructorElement.querySelectorAll('.option-player-video-translate.focus').length > 0) {
-			this.Kernel.ConstructorElement.querySelector('.option-player-video-translate').classList.remove('focus')
-			this.Kernel.ConstructorElement.querySelector('.option-player-video-content.right #menu-title').innerHTML = ``
-			this.Kernel.ConstructorElement.querySelector('.option-player-video-translate').style.transform = 'translateX(0px)'
+		if(this.kernel.ConstructorElement.querySelectorAll('.option-player-video-translate.focus').length > 0) {
+			this.kernel.getElement('.option-player-video-translate').classList.remove('focus')
+			this.kernel.getElement('.option-player-video-content.right #menu-title').innerHTML = ``
+			this.kernel.getElement('.option-player-video-translate').style.transform = 'translateX(0px)'
 
 			allB.forEach((e) => {
 				e.style.display = "none"
@@ -379,9 +307,9 @@ class FluttershyHMI extends FluttershyMain {
 			return true;
 		}
 
-		this.Kernel.ConstructorElement.classList.remove('settings')	
+		this.kernel.ConstructorElement.classList.remove('settings')	
 		allButtonSettoing.forEach((element) => {
-			this.Kernel.removeEvent(element, 'click', () => {})
+			this.kernel.removeEvent(element, 'click', () => {})
 		})
 
 		return false;

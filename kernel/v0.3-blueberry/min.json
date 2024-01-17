@@ -10,6 +10,7 @@
 		"blueberry.min",
 		"blueberry.function",
 		"blueberry.evenement",
+		"blueberry.config",
 		"blueberry.manager"
 	]
 }

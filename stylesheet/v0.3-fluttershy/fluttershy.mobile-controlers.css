@@ -399,4 +399,22 @@
 	.butterfly-player-api.player-button-is-skipped .player-button {
 		top: 24px;
 	}
+
+
+
+	.butterfly-player-api .option-player-video {
+		z-index: 9999;
+		bottom: 0px;
+
+		width: 250px;
+		min-height: 100%;
+		max-height: 100%;
+		max-height: 100%;
+
+		border-radius: 0px;
+	}
+
+	.butterfly-player-api.settings .option-player-video {
+		right: 0px;
+	}
 }

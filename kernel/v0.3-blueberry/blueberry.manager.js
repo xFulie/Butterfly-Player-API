@@ -1,4 +1,4 @@
-class blueberryManager extends blueberryEvenement {
+class blueberryManager extends blueberryConfig {
 
 	constructor(CssSelectorElement) {
 		super(CssSelectorElement);
@@ -34,5 +34,10 @@ class blueberryManager extends blueberryEvenement {
 	load_manager() {
 		this.create_element()
 		this.kernelEvenement_init()
+	}
+
+	videoReload() {
+		this.videoNode.src = this.currentSrc
+		this.videoNode.currentTime = this.currentTime
 	}
 }
